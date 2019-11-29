@@ -1,16 +1,14 @@
 package proyecto_216768_216663;
 
 import java.util.Scanner;
-import java.util.Calendar;
 import java.util.Vector;
-import java.util.Arrays;
 
 public class ControlCuartos {
     Scanner tec = new Scanner(System.in);
     
     Paciente[] A = new Paciente[15];
     Paciente[] B = new Paciente[10];
-    
+    //prueba
     float tarifaA = 1100;
     float tarifaB = 1990;
     
