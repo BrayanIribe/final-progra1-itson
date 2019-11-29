@@ -2,6 +2,8 @@ package proyecto_216768_216663;
 
 import java.util.Scanner;
 import java.util.Calendar;
+import java.util.Vector;
+import java.util.Arrays;
 
 public class ControlCuartos {
     Scanner tec = new Scanner(System.in);
@@ -13,6 +15,9 @@ public class ControlCuartos {
     float tarifaB = 1990;
     
     public void menu(){
+        this.A[1] = new Paciente();
+        this.A[1].nombre = "eax";
+        this.A[1].clave = "porpr";
         int opcion = 0;
         while(true){
             System.out.println("SISTEMA DE RESERVACION DE CUARTOS");
@@ -37,9 +42,11 @@ public class ControlCuartos {
                     break;
                 case 2:
                     // buscar paciente
+                    buscarPacientes();
                     break;
                 case 3:
                     // porcentaje de ocupacion de cada edificio
+                    porcentajeOcupacion();
                     break;
                 case 4:
                     // listado de pacientes de determinado doctor
@@ -58,17 +65,79 @@ public class ControlCuartos {
         
     }
     
+    public void buscarPacientes(){
+        System.out.printf("Escribe el nombre o clave del paciente: ");
+        String keyword = this.tec.nextLine();
+        Vector<Paciente> pacientes = this.buscarPacientesA(keyword);
+        if (pacientes == null || pacientes.size() == 0){
+            System.out.println("No se encontraron pacientes.");
+            return;
+        }
+        //aqui se imprime la informacion del paciente encontrado 
+        for(int i = 0; i < pacientes.size(); i++){
+            Paciente paciente = pacientes.get(i);
+            System.out.println(paciente.getNombre());
+            System.out.println(paciente.getClave());
+        }
+    }
+    
+    public void porcentajeOcupacion(){
+        int sum = 0;
+        float porcentajeA = 0;
+        float porcentajeB = 0;
+        for(int i = 0; i < this.A.length; i++){
+            if(this.A[i] == null){
+                continue;
+            }
+            sum ++;
+        }
+        porcentajeA  = ((float)sum / this.A.length)*100;
+        
+        sum = 0;
+        for(int i = 0; i < this.B.length; i++){
+            if(this.B[i] == null){
+                continue;
+            }
+            sum ++;
+        }
+        porcentajeB  = ((float)sum / this.B.length)*100;
+        
+        System.out.println(porcentajeA);
+        System.out.println(porcentajeB);
+    }
+    
+    public Vector<Paciente> buscarPacientesA(String keyword){
+        // crear un vector de objetos de pacientes
+        Vector<Paciente> results = new Vector<Paciente>();
+        // recorrer el edificio A en busca de pacientes segun
+        // el criterio de busqueda
+        if (this.A.length > 0)
+        for(int i = 0; i < this.A.length; i++){
+            if (this.A[i] == null)
+                continue;
+                        System.out.println(this.A[i]);
+            Paciente paciente = this.A[i];
+            if (paciente.getNombre().indexOf(keyword) == -1 &&
+                    paciente.getClave().indexOf(keyword) == -1)
+                continue;
+            //agregar al vector el paciente encontrado
+            results.add(paciente);
+        }
+        
+        return results;
+    }
+    
     public void registrarPaciente(){
-        System.out.println("El edifico A cuenta con cuartos sencillos");
+        System.out.println("El   edifico   A  cuenta  con  cuartos   sencillos");
         System.out.println("que tienen solo una cama y un baño.");
-        System.out.printf("El costo por cuarto es de %.2f al dia.",this.tarifaA);
+        System.out.printf("El costo por cuarto es de %.2f al dia.%n",this.tarifaA);
         System.out.println("======");
-        System.out.println("El edifico B cuenata con cuartos mas equipados");
-        System.out.println("esos tiene aprte de su cama: baño completo,");
-        System.out.println("caja de seguridad, closet, internet inalambrico,");
-        System.out.println("llamadas locales ilimitadas, mesa desayunador,");
-        System.out.println("frigobar y cafeteria, sillon reclinable,");
-        System.out.println("sala para visitas, reproductor de DVD, sofa cama,");
+        System.out.println("El  edifico  B  cuenata  con cuartos mas equipados");
+        System.out.println("esos   tiene  aprte  de su  cama:  baño  completo,");
+        System.out.println("caja de  seguridad, closet,  internet inalambrico,");
+        System.out.println("llamadas  locales  ilimitadas,  mesa  desayunador,");
+        System.out.println("frigobar   y   cafeteria,    sillon    reclinable,");
+        System.out.println("sala  para visitas, reproductor de DVD, sofa cama,");
         System.out.println("y television de paga.");
         System.out.printf("Este cuesta %.2f por dia.%n", this.tarifaB);
         System.out.println("======");
@@ -109,7 +178,7 @@ public class ControlCuartos {
         mn = Integer.parseInt(date[1]);
         dn = Integer.parseInt(date[2]);
         
-        if (yn >= 2019 && mn >= 1 && mn <= 12 && dn >= 1 && dn <= 31)
+        if (mn >= 1 && mn <= 12 && dn >= 1 && dn <= 31)
             break;
         }
         
@@ -134,11 +203,15 @@ public class ControlCuartos {
         System.out.printf("Escribe la clave: ");
         String clave = this.tec.nextLine();
         
+        System.out.printf("Escribe el nombre: ");
+        String nombre = this.tec.nextLine();
+        
+        
         System.out.printf("Escribe el sexo (M/f): ");
         String sexoStr = this.tec.nextLine().toUpperCase();
         char sexo = (sexoStr.charAt(0) == 'F' ? 'F' : 'M');
         
-        Paciente paciente = new Paciente(clave, sexo, yn, mn, dn, yi, mi, di);
+        Paciente paciente = new Paciente(clave, nombre, sexo, yn, mn, dn, yi, mi, di);
         
         edificio[ind] = paciente;
         
@@ -184,10 +257,10 @@ public class ControlCuartos {
         
         //linea del medio
         System.out.printf("%1s%-2s%1s","","A",esv);
-        for(int i = 0 ; i < 14 ; i++){
-        System.out.printf("%-1s%1s%2s","","X",esv);
+        for(int i = 0 ; i < 15 ; i++){
+        System.out.printf("%-1s%1s%2s","",(this.A[i] == null ? " " : "X"),esv);
         }
-        System.out.printf("%-1s%1s%2s%n","","X",esv);
+        System.out.println("");
         
         
         //linea inferior
@@ -215,11 +288,12 @@ public class ControlCuartos {
         
         
         //linea del medio
+        
         System.out.printf("%1s%-2s%1s","","B",esv);
-        for(int i = 0 ; i < 9 ; i++){
-        System.out.printf("%-1s%1s%2s","","X",esv);
+        for(int i = 0 ; i < 10 ; i++){
+        System.out.printf("%-1s%1s%2s","",(this.B[i] == null ? " " : "X"),esv);
         }
-        System.out.printf("%-1s%1s%2s%n","","X",esv);
+        System.out.println();
         
         
         //linea inferior

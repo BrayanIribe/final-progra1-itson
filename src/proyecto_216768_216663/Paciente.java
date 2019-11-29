@@ -4,6 +4,15 @@ package proyecto_216768_216663;
 import java.util.Calendar;
 public class Paciente {
     String clave;
+    String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     char sexo;
     Calendar fechaNacimiento = Calendar.getInstance();
     Calendar fechaIngreso = Calendar.getInstance();
@@ -11,8 +20,9 @@ public class Paciente {
     Paciente(){
     }
     
-    Paciente(String clave, char sexo, int yn, int mn, int dn, int yi, int mi, int di){
+    Paciente(String clave, String nombre, char sexo, int yn, int mn, int dn, int yi, int mi, int di){
         this.clave = clave;
+        this.nombre = nombre;
         this.sexo = sexo;
         mn--;
         mi--;
