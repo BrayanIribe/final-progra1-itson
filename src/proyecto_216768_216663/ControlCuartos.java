@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class ControlCuartos {
-    Scanner tec = new Scanner(System.in);
+    Scanner tec = new Scanner(System.in, "ISO-8859-1");
     Doctor doctor = new Doctor();
     String n = doctor.getNombre();
     Paciente[] A = new Paciente[15];
@@ -26,17 +26,20 @@ public class ControlCuartos {
       
     // us = union superior              | ui = union inferior
     // uli = union laterarl izquierda   | uld = union lateral derecha
+    // udc = union de cuatro lados
     char us = '\u2566';
     char ui = '\u2569';
     char uli = '\u2560';
     char uld = '\u2563';
+    char udc = '\u256C';
         
     // eii = esquina inferior izquierda | eid = esquina inferior derecha
     char eii = '\u255A';
     char eid = '\u255D';
     
-    // ce1 = caracter especial 1
+    // ce1 = caracter especial 1 | ce2 = caracter especial 2
     char ce1 = '\u2592';
+    char ce2 = '\u259A';
     
     public void menu(){
         //constructores para el edificio A
@@ -45,7 +48,16 @@ public class ControlCuartos {
         this.A[9] = new Paciente("OBN08", "Diego Garcia", 'H', 2004,7,17,2019,11,20);
         this.A[13] = new Paciente("OBN16", "Daniela Flores", 'F', 1999,10,27,2019,11,28);
         //constructores para el edificio B
-        this.B[6] = new Paciente("OBN03", "Pedro Zapata", 'H', 1957,5,13,2019,8,19);
+        this.B[0] = new Paciente("OBN42", "Pedro Zapata", 'H', 1957,5,13,2019,8,19);
+        this.B[1] = new Paciente("OBN03", "Camilo Zuñiga", 'H', 2001,2,23,2019,10,20);
+        this.B[2] = new Paciente("OBN17", "Laura Camello", 'F', 1932,1,25,2019,11,28);
+        this.B[3] = new Paciente("OBN19", "Bruce Banner", 'H', 1969,12,18,2019,11,10);
+        this.B[4] = new Paciente("OBN22", "Peter Parker", 'H', 1962,8,10,2019,10,19);
+        this.B[5] = new Paciente("OBN30", "Hermione Granger", 'F', 1979,9,19,2019,11,25);
+        this.B[6] = new Paciente("OBN05", "Homero Simpson", 'H', 1956,5,12,2019,10,9);
+        this.B[7] = new Paciente("OBN10", "El Rubius", 'H', 1990,2,13,2019,11,24);
+        this.B[8] = new Paciente("OBN15", "Ariana Grande", 'F', 1993,6,26,2019,10,31);
+        this.B[9] = new Paciente("OBN28", "La Rosalia", 'H', 1993,9,25,2019,11,29);
         int opcion = 0;
         while(true){
             System.out.println("SISTEMA DE RESERVACION DE CUARTOS");
@@ -83,7 +95,9 @@ public class ControlCuartos {
                 case 5:
                     // imprimir el mapa de cuartos disponibles y ocupados
                     imprimirMapaA();
+                    imprimirOcupantesA();
                     imprimirMapaB();
+                    imprimirOcupantesB();
                     break;
                 case 6:
                     // hacer corte
@@ -300,10 +314,41 @@ public class ControlCuartos {
         char edif = tec.nextLine().toUpperCase().charAt(0);
         Paciente[] edificio = (edif == 'B' ? this.B: this.A);
         
-        if(edificio.length <=0){
+        int cont = 0;
+        
+        if(edif == 'A'){
+            for(int i = 0 ; i < 15 ; i++){
+                if(A[i]!=null){
+                    cont++;
+                }
+            }
+            if(cont >=15){
+                System.out.println("No hay capacidad.");
+                System.out.println("");
+            return;
+            }
+            
+        }
+        else if(edif == 'B'){
+            for(int i = 0 ; i < 10 ; i++){
+                if(B[i]!=null){
+                    cont++;
+                }
+            }
+            if(cont >=10){
+                System.out.println("No hay capacidad.");
+                System.out.println("");
+            return;
+            }
+        }
+        
+        //cambie esto por las la lineas que escribi arriba porque no estaba validando el edificio B
+        /*
+        if(edificio.length <= 0){
             System.out.println("No hay capacidad.");
             return;
         }
+        */
         
         int yi, mi, di, yn, mn, dn;
         
@@ -370,9 +415,13 @@ public class ControlCuartos {
                 continue;
             }
             break;
-        }  
-        Paciente paciente = new Paciente(clave, nombre, sexo, yn, mn, dn, yi, mi, di);
+        }
+        System.out.println("");
+        System.out.println("El paciente se ha registrado correctamente.");
+        System.out.println("");
         
+        Paciente paciente = new Paciente(clave, nombre, sexo, yn, mn, dn, yi, mi, di);
+      
         edificio[ind] = paciente;   
     }
     
@@ -413,6 +462,70 @@ public class ControlCuartos {
         
     }
     
+    public void imprimirOcupantesA(){
+        int val = 0;
+        
+        //linea superior
+        System.out.printf("%4s",esi);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",us);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",us);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",esd);
+        
+        //linea nombre
+        System.out.printf("%4s%1s",esv,"");
+        for(int i = 0 ; i < 12 ; i++){
+            System.out.printf("%1s",ce2);
+        }
+        System.out.printf("%1s%-9s%-14s%-2s%5s%2s%n","",esv,"Nombre",esv,"Clave",esv);
+        
+        //linea divisora
+        System.out.printf("%4s",uli);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",udc);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",udc);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",uld);
+        
+        //contenido
+        for(int i = 0 ; i < 15 ; i++){
+            val = (this.A[i] == null ? 0 : 1);
+            if(val > 0){
+                System.out.printf("%4s%1s%-10s%2s%1s%1s%2s%-19s%2s%6s%2s%n",esv,"","Cuarto Nº",i+1,"",esv,"", A[i].getNombre(),esv, A[i].getClave(),esv);
+            }
+        }
+        
+        //linea inferior
+        System.out.printf("%4s",eii);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",ui);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",ui);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",eid);
+        System.out.println("");
+    }
     public void imprimirMapaB(){
         //Edificio B
         //numeros
@@ -448,5 +561,68 @@ public class ControlCuartos {
         System.out.println("");
     }
     
-    
+    public void imprimirOcupantesB(){
+           int val = 0;
+        
+        //linea superior
+        System.out.printf("%4s",esi);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",us);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",us);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",esd);
+        
+        //linea nombre
+        System.out.printf("%4s%1s",esv,"");
+        for(int i = 0 ; i < 12 ; i++){
+            System.out.printf("%1s",ce2);
+        }
+        System.out.printf("%1s%-9s%-14s%-2s%5s%2s%n","",esv,"Nombre",esv,"Clave",esv);
+        
+        //linea divisora
+        System.out.printf("%4s",uli);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",udc);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",udc);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",uld);
+        
+        //contenido
+        for(int i = 0 ; i < 10 ; i++){
+            val = (this.B[i] == null ? 0 : 1);
+            if(val > 0){
+                System.out.printf("%4s%1s%-10s%2s%1s%1s%2s%-19s%2s%6s%2s%n",esv,"","Cuarto Nº",i+1,"",esv,"", B[i].getNombre(),esv, B[i].getClave(),esv);
+            }
+        }
+        
+        //linea inferior
+        System.out.printf("%4s",eii);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",ui);
+        for(int i = 0 ; i < 22 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%s",ui);
+        for(int i = 0 ; i < 7 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",eid);
+        System.out.println("");
+    }
 }
