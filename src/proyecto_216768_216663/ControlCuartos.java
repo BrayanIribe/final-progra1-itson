@@ -9,16 +9,43 @@ public class ControlCuartos {
     String n = doctor.getNombre();
     Paciente[] A = new Paciente[15];
     Paciente[] B = new Paciente[10];
-    //prueba
-    //NO BORRAR
-    //MUCHOS CAMBIOS
+    
+    
+    //precios
     float tarifaA = 1100;
     float tarifaB = 1990;
     
+    //chars para el dibujo de cajas
+    // esi = esquina superior izquierda     | esd = esquina superior derecha
+    char esi = '\u2554';
+    char esd = '\u2557';
+        
+    // esp = espacio, linea horizontal  | esv = espacio, linea vertical
+    char esh = '\u2500';
+    char esv = '\u2502';
+      
+    // us = union superior              | ui = union inferior
+    // uli = union laterarl izquierda   | uld = union lateral derecha
+    char us = '\u2566';
+    char ui = '\u2569';
+    char uli = '\u2560';
+    char uld = '\u2563';
+        
+    // eii = esquina inferior izquierda | eid = esquina inferior derecha
+    char eii = '\u255A';
+    char eid = '\u255D';
+    
+    // ce1 = caracter especial 1
+    char ce1 = '\u2592';
+    
     public void menu(){
-        this.A[1] = new Paciente();
-        this.A[1].nombre = "eax";
-        this.A[1].clave = "porpr";
+        //constructores para el edificio A
+        this.A[1] = new Paciente("OBN13", "Jesus Urrego", 'H', 1990,10,12,2019,10,8);
+        this.A[5] = new Paciente("OBN25", "Sara Perez", 'F', 1997,3,28,2019,10,18);
+        this.A[9] = new Paciente("OBN08", "Diego Garcia", 'H', 2004,7,17,2019,11,20);
+        this.A[13] = new Paciente("OBN16", "Daniela Flores", 'F', 1999,10,27,2019,11,28);
+        //constructores para el edificio B
+        this.B[6] = new Paciente("OBN03", "Pedro Zapata", 'H', 1957,5,13,2019,8,19);
         int opcion = 0;
         while(true){
             System.out.println("SISTEMA DE RESERVACION DE CUARTOS");
@@ -32,6 +59,7 @@ public class ControlCuartos {
             System.out.println("");
             System.out.print("> ");
             opcion = this.tec.nextInt();
+            System.out.println("");
             this.tec.nextLine();
             if (opcion == 7)
                 break;
@@ -54,7 +82,8 @@ public class ControlCuartos {
                     break;
                 case 5:
                     // imprimir el mapa de cuartos disponibles y ocupados
-                    imprimirMapa();
+                    imprimirMapaA();
+                    imprimirMapaB();
                     break;
                 case 6:
                     // hacer corte
@@ -65,20 +94,52 @@ public class ControlCuartos {
         }
         
     }
-    
+    //brayan, aqui no entiendo muy bien que esta pasando
+    //pero parece que solo esta buscando en el edifico A
     public void buscarPacientes(){
         System.out.printf("Escribe el nombre o clave del paciente: ");
         String keyword = this.tec.nextLine();
+        System.out.println("");
+        
+        //aqui hay que hacer que al momento de buscar se ignoren mayusculas o minusculas
         Vector<Paciente> pacientes = this.buscarPacientesA(keyword);
         if (pacientes == null || pacientes.size() == 0){
+            System.out.println("");
             System.out.println("No se encontraron pacientes.");
+            System.out.println("");
             return;
         }
         //aqui se imprime la informacion del paciente encontrado 
         for(int i = 0; i < pacientes.size(); i++){
             Paciente paciente = pacientes.get(i);
-            System.out.println(paciente.getNombre());
-            System.out.println(paciente.getClave());
+            System.out.println("");
+            
+            System.out.printf("%1s", esi);
+            for(int b = 0 ;b < 54; b++){
+                System.out.printf("%1s",esh);
+            }
+            System.out.printf("%1s%n", esd);
+        
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Nombre:",paciente.getNombre(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Clave:",paciente.getClave(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Sexo:",paciente.getSexo(),esv);
+            
+            //aqui hay que agregar la habitacion actual, tampoco supe ponerla xd
+            //System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",esv);
+            
+            //aqui no supe agregar la fecha
+            /*
+            System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de nacimiento:",paciente.getFechaNacimiento(),esv);
+            System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de ingreso:", paciente.getFechaIngreso(),esv);
+            */            
+
+            System.out.printf("%1s", eii);
+            for(int b = 0 ;b < 54; b++){
+                System.out.printf("%1s",esh);
+            }
+            System.out.printf("%1s%n", eid);
+            
+            System.out.println("");
         }
     }
     
@@ -102,9 +163,64 @@ public class ControlCuartos {
             sum ++;
         }
         porcentajeB  = ((float)sum / this.B.length)*100;
+        int A = (int)porcentajeA;
+        int B = (int)porcentajeB;
         
-        System.out.println(porcentajeA);
-        System.out.println(porcentajeB);
+        System.out.println("El porcentaje de ocupacion de los edificios es:");
+        
+        // edificio A
+        System.out.printf("%1s",esi);
+        for(int i = 0 ; i < 102; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",esd);
+        
+        System.out.printf("%-2s",esv);
+        for(int i = 0 ; i < A; i++){
+            System.out.printf("%1s",ce1);
+        }
+        int C = 101 - A;
+        for(int i = 0 ; i < C ; i++){
+            System.out.printf("%1s","");
+        }
+        System.out.printf("%1s%n",esv);
+        
+        System.out.printf("%1s",eii);
+        for(int i = 0 ; i < 102; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",eid);
+        
+        System.out.printf("%-12s%3.0f%c%n","Edificio A:",porcentajeA,'%');
+        
+        System.out.println("");
+        
+        // edificio B
+        System.out.printf("%1s",esi);
+        for(int i = 0 ; i < 102; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",esd);
+        
+        System.out.printf("%-2s",esv);
+        for(int i = 0 ; i < B; i++){
+            System.out.printf("%1s",ce1);
+        }
+        C = 101 - B;
+        for(int i = 0 ; i < C ; i++){
+            System.out.printf("%1s","");
+        }
+        System.out.printf("%1s%n",esv);
+        
+        System.out.printf("%1s",eii);
+        for(int i = 0 ; i < 102; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",eid);
+        
+        System.out.printf("%-12s%3.0f%c%n","Edificio B:",porcentajeB,'%');
+        
+        System.out.println("");
     }
     
     public Vector<Paciente> buscarPacientesA(String keyword){
@@ -129,19 +245,57 @@ public class ControlCuartos {
     }
     
     public void registrarPaciente(){
-        System.out.println("El   edifico   A  cuenta  con  cuartos   sencillos");
-        System.out.println("que tienen solo una cama y un baño.");
-        System.out.printf("El costo por cuarto es de %.2f al dia.%n",this.tarifaA);
-        System.out.println("======");
-        System.out.println("El  edifico  B  cuenata  con cuartos mas equipados");
-        System.out.println("esos   tiene  aprte  de su  cama:  baño  completo,");
-        System.out.println("caja de  seguridad, closet,  internet inalambrico,");
-        System.out.println("llamadas  locales  ilimitadas,  mesa  desayunador,");
-        System.out.println("frigobar   y   cafeteria,    sillon    reclinable,");
-        System.out.println("sala  para visitas, reproductor de DVD, sofa cama,");
-        System.out.println("y television de paga.");
-        System.out.printf("Este cuesta %.2f por dia.%n", this.tarifaB);
-        System.out.println("======");
+        System.out.printf("%1s", esi);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", esd);
+        
+        System.out.printf("%-2s%-78s%2s%n",esv,"El edifico A cuenta con cuartos sencillos que tienen solo una cama y un baño.",esv);
+        
+        System.out.printf("%1s", uli);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", uld);
+        
+        System.out.printf("%-2s%-28s%-7.2f%-43s%2s%n",esv,"El costo por cuarto es de  $",this.tarifaA," pesos al dia.",esv);
+        
+        System.out.printf("%1s", eii);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", eid);
+        
+        System.out.println("");
+        
+        System.out.printf("%1s", esi);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", esd);
+        
+        System.out.printf("%-2s%-78s%2s%n",esv,"El edificio B cuenta con cuartos mas equipados, esos tienen aparte de su cama:",esv);
+        System.out.printf("%-2s%-78s%2s%n",esv,"Baño  completo, caja  de  seguridad, closet,  internet  inalambrico,  llamadas",esv);
+        System.out.printf("%-2s%-78s%2s%n",esv,"locales ilimitadas, mesa desayunador, frigobar y cafeteria, sillon reclinable,",esv);
+        System.out.printf("%-2s%-78s%2s%n",esv,"sala para visitas, reproductor DVD, sofa cama y television de paga.", esv);      
+        
+        System.out.printf("%1s", uli);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", uld);
+        
+        System.out.printf("%-2s%-28s%-7.2f%-43s%2s%n",esv,"El costo por cuarto es de  $",this.tarifaB," pesos al dia.",esv);
+        
+        System.out.printf("%1s", eii);
+        for(int i = 0 ;i < 80; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n", eid);
+        
+        System.out.println("");
+        
         System.out.printf("Seleccione un edificio (A/b): ");
         char edif = tec.nextLine().toUpperCase().charAt(0);
         Paciente[] edificio = (edif == 'B' ? this.B: this.A);
@@ -153,20 +307,15 @@ public class ControlCuartos {
         
         int yi, mi, di, yn, mn, dn;
         
-        while(true){
-        System.out.printf("Escribe la fecha de ingreso (YYYY-mm-dd): ");
-        String[] date = this.tec.nextLine().split("-");
+        System.out.printf("Escribe el nombre: ");
+        String nombre = this.tec.nextLine();
         
-        if (date.length != 3)
-            continue;
+        System.out.printf("Escribe la clave: ");
+        String clave = this.tec.nextLine().toUpperCase();  
         
-        yi = Integer.parseInt(date[0]);
-        mi = Integer.parseInt(date[1]);
-        di = Integer.parseInt(date[2]);
-        
-        if (yi >= 2019 && mi >= 1 && mi <= 12 && di >= 1 && di <= 31)
-            break;
-        }
+        System.out.printf("Escribe el sexo (M/f): ");
+        String sexoStr = this.tec.nextLine().toUpperCase();
+        char sexo = (sexoStr.charAt(0) == 'F' ? 'F' : 'M');
         
         while(true){
         System.out.printf("Escribe la fecha de nacimiento (YYYY-mm-dd): ");
@@ -183,8 +332,30 @@ public class ControlCuartos {
             break;
         }
         
-        // IMPRIMIR MAPA DE UBICACION
+        while(true){
+        System.out.printf("Escribe la fecha de ingreso (YYYY-mm-dd): ");
+        String[] date = this.tec.nextLine().split("-");
         
+        if (date.length != 3)
+            continue;
+        
+        yi = Integer.parseInt(date[0]);
+        mi = Integer.parseInt(date[1]);
+        di = Integer.parseInt(date[2]);
+        
+        if (yi >= 2019 && mi >= 1 && mi <= 12 && di >= 1 && di <= 31)
+            break;
+        }
+        
+        // IMPRIMIR MAPA DE UBICACION
+        System.out.println("");
+        if(edif == 'A'){
+            imprimirMapaA();
+        }
+        else if(edif == 'B'){
+            imprimirMapaB();
+        }
+        System.out.println("");
         int ind = 0;
         
         while(true){
@@ -199,46 +370,13 @@ public class ControlCuartos {
                 continue;
             }
             break;
-        }
-        
-        System.out.printf("Escribe la clave: ");
-        String clave = this.tec.nextLine();
-        
-        System.out.printf("Escribe el nombre: ");
-        String nombre = this.tec.nextLine();
-        
-        
-        System.out.printf("Escribe el sexo (M/f): ");
-        String sexoStr = this.tec.nextLine().toUpperCase();
-        char sexo = (sexoStr.charAt(0) == 'F' ? 'F' : 'M');
-        
+        }  
         Paciente paciente = new Paciente(clave, nombre, sexo, yn, mn, dn, yi, mi, di);
         
-        edificio[ind] = paciente;
-        
-        
+        edificio[ind] = paciente;   
     }
     
-    public void imprimirMapa(){
-        // esi = esquina superior izquierda / esd = esquina superior derecha
-        char esi = '\u2554';
-        char esd = '\u2557';
-        
-        // esp = espacio, linea horizontal
-        char esh = '\u2500';
-        
-        // us = union superior
-        char us = '\u2566';
-        
-        // esv = espacio, linea vertical
-        char esv = '\u2502';
-
-        // ui = union inferior
-        char ui = '\u2569';
-        
-        // eii = esquina inferior izquierda / eid = esquina inferior derecha
-        char eii = '\u255A';
-        char eid = '\u255D';
+    public void imprimirMapaA(){
         
         //Edificio A
         //numeros
@@ -270,8 +408,12 @@ public class ControlCuartos {
         System.out.printf("%1s%1s%1s%1s",esh,esh,esh,ui);
         }
         System.out.printf("%1s%1s%1s%1s%n",esh,esh,esh,eid);
-        System.out.println();
+        System.out.println("");
         
+        
+    }
+    
+    public void imprimirMapaB(){
         //Edificio B
         //numeros
         System.out.printf("%3s","");
@@ -303,6 +445,7 @@ public class ControlCuartos {
         System.out.printf("%1s%1s%1s%1s",esh,esh,esh,ui);
         }
         System.out.printf("%1s%1s%1s%1s%n",esh,esh,esh,eid);    
+        System.out.println("");
     }
     
     
