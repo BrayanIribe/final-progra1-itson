@@ -5,14 +5,6 @@ import java.util.Calendar;
 public class Paciente {
     String clave;
     String nombre;
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
     char sexo;
     Calendar fechaNacimiento = Calendar.getInstance();
     Calendar fechaIngreso = Calendar.getInstance();
@@ -29,6 +21,14 @@ public class Paciente {
         this.fechaNacimiento.set(yn, mn, dn);
         this.fechaIngreso.set(yi, mi, di);
         
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getClave() {

@@ -5,10 +5,13 @@ import java.util.Vector;
 
 public class ControlCuartos {
     Scanner tec = new Scanner(System.in);
-    
+    Doctor doctor = new Doctor();
+    String n = doctor.getNombre();
     Paciente[] A = new Paciente[15];
     Paciente[] B = new Paciente[10];
     //prueba
+    //NO BORRAR
+    //MUCHOS CAMBIOS
     float tarifaA = 1100;
     float tarifaB = 1990;
     
