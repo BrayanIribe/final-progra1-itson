@@ -9,6 +9,7 @@ public class ControlCuartos {
     String n = doctor.getNombre();
     Paciente[] A = new Paciente[15];
     Paciente[] B = new Paciente[10];
+    ModelManager manager = new ModelManager();
     
     
     //precios
@@ -43,21 +44,21 @@ public class ControlCuartos {
     
     public void menu(){
         //constructores para el edificio A
-        this.A[1] = new Paciente("OBN13", "Jesus Urrego", 'H', 1990,10,12,2019,10,8);
-        this.A[5] = new Paciente("OBN25", "Sara Perez", 'F', 1997,3,28,2019,10,18);
-        this.A[9] = new Paciente("OBN08", "Diego Garcia", 'H', 2004,7,17,2019,11,20);
-        this.A[13] = new Paciente("OBN16", "Daniela Flores", 'F', 1999,10,27,2019,11,28);
+        this.A[1] = new Paciente(this.manager, "Jesus Urrego", 'H', "1990-10-12","2019-10-08");
+        this.A[5] = new Paciente(this.manager, "Sara Perez", 'F', "1997-03-28","2019-10-18");
+        this.A[9] = new Paciente(this.manager, "Diego Garcia", 'H', "2004-07-17","2019-11-20");
+        this.A[13] = new Paciente(this.manager, "Daniela Flores", 'F', "1999-10-27","2019-11-28");
         //constructores para el edificio B
-        this.B[0] = new Paciente("OBN42", "Pedro Zapata", 'H', 1957,5,13,2019,8,19);
-        this.B[1] = new Paciente("OBN03", "Camilo Zuñiga", 'H', 2001,2,23,2019,10,20);
-        this.B[2] = new Paciente("OBN17", "Laura Camello", 'F', 1932,1,25,2019,11,28);
-        this.B[3] = new Paciente("OBN19", "Bruce Banner", 'H', 1969,12,18,2019,11,10);
-        this.B[4] = new Paciente("OBN22", "Peter Parker", 'H', 1962,8,10,2019,10,19);
-        this.B[5] = new Paciente("OBN30", "Hermione Granger", 'F', 1979,9,19,2019,11,25);
-        this.B[6] = new Paciente("OBN05", "Homero Simpson", 'H', 1956,5,12,2019,10,9);
-        this.B[7] = new Paciente("OBN10", "El Rubius", 'H', 1990,2,13,2019,11,24);
-        this.B[8] = new Paciente("OBN15", "Ariana Grande", 'F', 1993,6,26,2019,10,31);
-        this.B[9] = new Paciente("OBN28", "La Rosalia", 'H', 1993,9,25,2019,11,29);
+        this.B[0] = new Paciente(this.manager, "Pedro Zapata", 'H',"57-05-03","2019-08-19");
+        this.B[1] = new Paciente(this.manager, "Camilo Zuñiga", 'H', "2001-02-23","2019-10-20");
+        this.B[2] = new Paciente(this.manager, "Laura Camello", 'F', "1932-01-25","2019-11-28");
+        this.B[3] = new Paciente(this.manager, "Bruce Banner", 'H', "1969-12-18","2019-11-10");
+        this.B[4] = new Paciente(this.manager, "Peter Parker", 'H', "1962-08-10","2019-10-19");
+        this.B[5] = new Paciente(this.manager, "Hermione Granger", 'F', "1979-09-19","2019-11-25");
+        this.B[6] = new Paciente(this.manager, "Homero Simpson", 'H', "1956-05-12","2019-10-09");
+        this.B[7] = new Paciente(this.manager, "El Rubius", 'H', "1990-02-13","2019-11-24");
+        this.B[8] = new Paciente(this.manager, "Ariana Grande", 'F', "1993-06-26","2019-10-31");
+        this.B[9] = new Paciente(this.manager, "La Rosalia", 'H', "1993-09-25","2019-11-29");
         int opcion = 0;
         while(true){
             System.out.println("SISTEMA DE RESERVACION DE CUARTOS");
@@ -116,7 +117,8 @@ public class ControlCuartos {
         System.out.println("");
         
         //aqui hay que hacer que al momento de buscar se ignoren mayusculas o minusculas
-        Vector<Paciente> pacientes = this.buscarPacientesA(keyword);
+        Vector<Paciente> pacientes = this.buscarPacientesW(keyword);
+        
         if (pacientes == null || pacientes.size() == 0){
             System.out.println("");
             System.out.println("No se encontraron pacientes.");
@@ -237,19 +239,25 @@ public class ControlCuartos {
         System.out.println("");
     }
     
-    public Vector<Paciente> buscarPacientesA(String keyword){
+    public Vector<Paciente> buscarPacientesW(String keyword){
         // crear un vector de objetos de pacientes
         Vector<Paciente> results = new Vector<Paciente>();
         // recorrer el edificio A en busca de pacientes segun
-        // el criterio de busqueda
+        // el criterio de busqueda5
+        char tipoBusqueda = 'N'; //N = nombre, C = clave
+        
+        if (keyword.toLowerCase().indexOf("obn") != -1)
+            tipoBusqueda = 'C';
+        
+        keyword = keyword.toLowerCase();
         if (this.A.length > 0)
         for(int i = 0; i < this.A.length; i++){
             if (this.A[i] == null)
                 continue;
-                        System.out.println(this.A[i]);
+            
             Paciente paciente = this.A[i];
-            if (paciente.getNombre().indexOf(keyword) == -1 &&
-                    paciente.getClave().indexOf(keyword) == -1)
+            if (paciente.getNombre().toLowerCase().indexOf(keyword) == -1 &&
+                    paciente.getClave().toLowerCase().indexOf(keyword) == -1)
                 continue;
             //agregar al vector el paciente encontrado
             results.add(paciente);
@@ -339,6 +347,7 @@ public class ControlCuartos {
                 System.out.println("No hay capacidad.");
                 System.out.println("");
             return;
+            
             }
         }
         
@@ -355,16 +364,17 @@ public class ControlCuartos {
         System.out.printf("Escribe el nombre: ");
         String nombre = this.tec.nextLine();
         
-        System.out.printf("Escribe la clave: ");
-        String clave = this.tec.nextLine().toUpperCase();  
-        
         System.out.printf("Escribe el sexo (M/f): ");
         String sexoStr = this.tec.nextLine().toUpperCase();
         char sexo = (sexoStr.charAt(0) == 'F' ? 'F' : 'M');
         
+        String fingreso;
+        String fnacimiento;
+        
         while(true){
         System.out.printf("Escribe la fecha de nacimiento (YYYY-mm-dd): ");
-        String[] date = this.tec.nextLine().split("-");
+        fnacimiento = this.tec.nextLine();
+        String[] date = fnacimiento.split("-");
         
         if (date.length != 3)
             continue;
@@ -379,7 +389,8 @@ public class ControlCuartos {
         
         while(true){
         System.out.printf("Escribe la fecha de ingreso (YYYY-mm-dd): ");
-        String[] date = this.tec.nextLine().split("-");
+        fingreso = this.tec.nextLine();
+        String[] date = fingreso.split("-");
         
         if (date.length != 3)
             continue;
@@ -420,7 +431,7 @@ public class ControlCuartos {
         System.out.println("El paciente se ha registrado correctamente.");
         System.out.println("");
         
-        Paciente paciente = new Paciente(clave, nombre, sexo, yn, mn, dn, yi, mi, di);
+        Paciente paciente = new Paciente(this.manager, nombre, sexo, fnacimiento, fingreso);
       
         edificio[ind] = paciente;   
     }
