@@ -4,6 +4,9 @@ package proyecto_216768_216663;
 import java.util.Calendar;
 public class Paciente {
     int id;
+    int doctorId;
+    char edif;
+    int habit;
     String nombre;
     char sexo;
     Calendar fechaNacimiento = Calendar.getInstance();
@@ -13,7 +16,13 @@ public class Paciente {
         
     }
     
-    Paciente(ModelManager manager, String nombre, char sexo, String fnacimiento, String fingreso){
+    Paciente(int id, String nombre, char sexo){
+        this.id = id;
+        this.nombre = nombre;
+        this.sexo = sexo;
+    }
+    
+    Paciente(ModelManager manager, String nombre, char sexo, String fnacimiento, String fingreso, char edif, int habit, int doctorId){
         this.id = manager.getId();
         manager.increase();
         
@@ -35,6 +44,25 @@ public class Paciente {
                 Integer.parseInt(date[2])
         );
         
+        this.edif = (edif == 'B' ? 'B' : 'A');
+        this.habit = habit;
+        this.doctorId = doctorId;
+    }
+
+    public int getHabit() {
+        return habit;
+    }
+
+    public void setHabit(int habit) {
+        this.habit = habit;
+    }
+
+    public char getEdif() {
+        return edif;
+    }
+
+    public void setEdif(char edif) {
+        this.edif = edif;
     }
     
     public String getClave(){
@@ -77,9 +105,12 @@ public class Paciente {
     public void setFechaIngreso(Calendar fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
-    
-    
-    
-    
-    
+
+    public int getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
+    } 
 }

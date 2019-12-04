@@ -5,8 +5,7 @@ import java.util.Vector;
 
 public class ControlCuartos {
     Scanner tec = new Scanner(System.in, "ISO-8859-1");
-    Doctor doctor = new Doctor();
-    String n = doctor.getNombre();
+    Doctor[] doctor = new Doctor[3];
     Paciente[] A = new Paciente[15];
     Paciente[] B = new Paciente[10];
     ModelManager manager = new ModelManager();
@@ -43,22 +42,26 @@ public class ControlCuartos {
     char ce2 = '\u259A';
     
     public void menu(){
+        this.doctor[0] = new Doctor(1, "Mario Aguilar", 'H', 'G');
+        this.doctor[1] = new Doctor(2, "Daniel Sanchez", 'H', 'O');
+        this.doctor[2] = new Doctor(3, "Laura Bozo", 'F', 'G');
+        
         //constructores para el edificio A
-        this.A[1] = new Paciente(this.manager, "Jesus Urrego", 'H', "1990-10-12","2019-10-08");
-        this.A[5] = new Paciente(this.manager, "Sara Perez", 'F', "1997-03-28","2019-10-18");
-        this.A[9] = new Paciente(this.manager, "Diego Garcia", 'H', "2004-07-17","2019-11-20");
-        this.A[13] = new Paciente(this.manager, "Daniela Flores", 'F', "1999-10-27","2019-11-28");
+        this.A[1] = new Paciente(this.manager, "Jesus Urrego", 'H', "1990-10-12","2019-10-08", 'A', 1, 1);
+        this.A[5] = new Paciente(this.manager, "Sara Perez", 'F', "1997-03-28","2019-10-18", 'A', 5, 2);
+        this.A[9] = new Paciente(this.manager, "Diego Garcia", 'H', "2004-07-17","2019-11-20", 'A', 9, 3);
+        this.A[13] = new Paciente(this.manager, "Daniela Flores", 'F', "1999-10-27","2019-11-28", 'A', 13, 1);
         //constructores para el edificio B
-        this.B[0] = new Paciente(this.manager, "Pedro Zapata", 'H',"57-05-03","2019-08-19");
-        this.B[1] = new Paciente(this.manager, "Camilo Zuñiga", 'H', "2001-02-23","2019-10-20");
-        this.B[2] = new Paciente(this.manager, "Laura Camello", 'F', "1932-01-25","2019-11-28");
-        this.B[3] = new Paciente(this.manager, "Bruce Banner", 'H', "1969-12-18","2019-11-10");
-        this.B[4] = new Paciente(this.manager, "Peter Parker", 'H', "1962-08-10","2019-10-19");
-        this.B[5] = new Paciente(this.manager, "Hermione Granger", 'F', "1979-09-19","2019-11-25");
-        this.B[6] = new Paciente(this.manager, "Homero Simpson", 'H', "1956-05-12","2019-10-09");
-        this.B[7] = new Paciente(this.manager, "El Rubius", 'H', "1990-02-13","2019-11-24");
-        this.B[8] = new Paciente(this.manager, "Ariana Grande", 'F', "1993-06-26","2019-10-31");
-        this.B[9] = new Paciente(this.manager, "La Rosalia", 'H', "1993-09-25","2019-11-29");
+        this.B[0] = new Paciente(this.manager, "Pedro Zapata", 'H',"57-05-03","2019-08-19",'B', 0, 1);
+        this.B[1] = new Paciente(this.manager, "Camilo Zuñiga", 'H', "2001-02-23","2019-10-20", 'B', 1, 2);
+        this.B[2] = new Paciente(this.manager, "Laura Camello", 'F', "1932-01-25","2019-11-28", 'B', 2, 3);
+        this.B[3] = new Paciente(this.manager, "Bruce Banner", 'H', "1969-12-18","2019-11-10", 'B', 3, 1);
+        this.B[4] = new Paciente(this.manager, "Peter Parker", 'H', "1962-08-10","2019-10-19", 'B', 4, 2);
+        this.B[5] = new Paciente(this.manager, "Hermione Granger", 'F', "1979-09-19","2019-11-25", 'B', 5, 2);
+        this.B[6] = new Paciente(this.manager, "Homero Simpson", 'H', "1956-05-12","2019-10-09", 'B', 6, 3);
+        this.B[7] = new Paciente(this.manager, "El Rubius", 'H', "1990-02-13","2019-11-24", 'B', 7, 3);
+        this.B[8] = new Paciente(this.manager, "Ariana Grande", 'F', "1993-06-26","2019-10-31", 'B', 8, 1);
+        this.B[9] = new Paciente(this.manager, "La Rosalia", 'H', "1993-09-25","2019-11-29", 'B', 9, 2);
         int opcion = 0;
         while(true){
             System.out.println("SISTEMA DE RESERVACION DE CUARTOS");
@@ -92,6 +95,7 @@ public class ControlCuartos {
                     break;
                 case 4:
                     // listado de pacientes de determinado doctor
+                    pacientesDoctor();
                     break;
                 case 5:
                     // imprimir el mapa de cuartos disponibles y ocupados
@@ -117,7 +121,7 @@ public class ControlCuartos {
         System.out.println("");
         
         //aqui hay que hacer que al momento de buscar se ignoren mayusculas o minusculas
-        Vector<Paciente> pacientes = this.buscarPacientesW(keyword);
+        Vector<Paciente> pacientes = this.buscarPacientesW(keyword, 0);
         
         if (pacientes == null || pacientes.size() == 0){
             System.out.println("");
@@ -139,6 +143,8 @@ public class ControlCuartos {
             System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Nombre:",paciente.getNombre(),esv);
             System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Clave:",paciente.getClave(),esv);
             System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Sexo:",paciente.getSexo(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Edificio:",paciente.getEdif(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",paciente.getHabit() + 1,esv);
             
             //aqui hay que agregar la habitacion actual, tampoco supe ponerla xd
             //System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",esv);
@@ -239,26 +245,64 @@ public class ControlCuartos {
         System.out.println("");
     }
     
-    public Vector<Paciente> buscarPacientesW(String keyword){
+    public Vector<Paciente> buscarPacientesW(String keyword, int doctorId){
         // crear un vector de objetos de pacientes
         Vector<Paciente> results = new Vector<Paciente>();
         // recorrer el edificio A en busca de pacientes segun
         // el criterio de busqueda5
         char tipoBusqueda = 'N'; //N = nombre, C = clave
         
-        if (keyword.toLowerCase().indexOf("obn") != -1)
+        if (keyword.toLowerCase().contains("obn")) //se encontro
             tipoBusqueda = 'C';
         
+        if(doctorId > 0){
+            tipoBusqueda = 'D';
+        }
+        
         keyword = keyword.toLowerCase();
+        
         if (this.A.length > 0)
         for(int i = 0; i < this.A.length; i++){
             if (this.A[i] == null)
                 continue;
             
             Paciente paciente = this.A[i];
-            if (paciente.getNombre().toLowerCase().indexOf(keyword) == -1 &&
-                    paciente.getClave().toLowerCase().indexOf(keyword) == -1)
+            if(tipoBusqueda == 'N'){
+                if (!paciente.getNombre().toLowerCase().contains(keyword))
+                    continue;
+            }
+            else if(tipoBusqueda == 'D'){
+                if(paciente.getDoctorId() != doctorId){
+                    continue;
+                }
+            }
+            else{
+                if (paciente.getClave().toLowerCase().compareTo(keyword) != 0)
+                    continue;
+            }
+            //agregar al vector el paciente encontrado
+            results.add(paciente);
+        }
+        
+        if (this.B.length > 0)
+        for(int i = 0; i < this.B.length; i++){
+            if (this.B[i] == null)
                 continue;
+            
+            Paciente paciente = this.B[i];
+            if(tipoBusqueda == 'N'){
+                if (!paciente.getNombre().toLowerCase().contains(keyword))
+                    continue;
+            }
+            else if(tipoBusqueda == 'D'){
+                if(paciente.getDoctorId() != doctorId){
+                    continue;
+                }
+            }
+            else{
+                if (paciente.getClave().toLowerCase().compareTo(keyword) != 0)
+                    continue;
+            }
             //agregar al vector el paciente encontrado
             results.add(paciente);
         }
@@ -266,7 +310,7 @@ public class ControlCuartos {
         return results;
     }
     
-    public void registrarPaciente(){
+    public void registrarPaciente(){        
         System.out.printf("%1s", esi);
         for(int i = 0 ;i < 80; i++){
             System.out.printf("%1s",esh);
@@ -318,7 +362,7 @@ public class ControlCuartos {
         
         System.out.println("");
         
-        System.out.printf("Seleccione un edificio (A/b): ");
+        System.out.printf("Seleccione un edificio (A/B): ");
         char edif = tec.nextLine().toUpperCase().charAt(0);
         Paciente[] edificio = (edif == 'B' ? this.B: this.A);
         
@@ -333,7 +377,7 @@ public class ControlCuartos {
             if(cont >=15){
                 System.out.println("No hay capacidad.");
                 System.out.println("");
-            return;
+                return;
             }
             
         }
@@ -346,8 +390,7 @@ public class ControlCuartos {
             if(cont >=10){
                 System.out.println("No hay capacidad.");
                 System.out.println("");
-            return;
-            
+                return;
             }
         }
         
@@ -367,6 +410,27 @@ public class ControlCuartos {
         System.out.printf("Escribe el sexo (M/f): ");
         String sexoStr = this.tec.nextLine().toUpperCase();
         char sexo = (sexoStr.charAt(0) == 'F' ? 'F' : 'M');
+        
+        int doctorId = 1;
+        
+        for(int i = 0; i < this.doctor.length; i++){
+            if (this.doctor == null)
+                continue;
+            
+            System.out.printf("Nombre: %s\n", this.doctor[i].getNombre());
+        }
+        
+        while(true){
+        System.out.println("Escribe el ID del doctor que desea seleccionar");
+        System.out.println("(tome en cuenta la especialidad a la hora de elegir)");
+        doctorId = tec.nextInt(); 
+        tec.nextLine();
+        Doctor doctor = this.obtenerDoctor(doctorId);
+        if(doctor != null){
+                break;
+            }
+        System.out.println("Seleccion incorrecta");
+        }
         
         String fingreso;
         String fnacimiento;
@@ -431,11 +495,84 @@ public class ControlCuartos {
         System.out.println("El paciente se ha registrado correctamente.");
         System.out.println("");
         
-        Paciente paciente = new Paciente(this.manager, nombre, sexo, fnacimiento, fingreso);
+        Paciente paciente = new Paciente(this.manager, nombre, sexo, fnacimiento, fingreso, edif, ind, doctorId);
       
         edificio[ind] = paciente;   
     }
     
+    public Doctor obtenerDoctor(int id){
+        for(int i = 0 ; i < this.doctor.length ; i++){
+            if(this.doctor[i].getId()==id)
+                return this.doctor[i];
+        }
+        return null;
+    }
+    
+    public void pacientesDoctor(){
+           int doctorId = 1;
+        
+        for(int i = 0; i < this.doctor.length; i++){
+            if (this.doctor == null)
+                continue;
+            
+            System.out.printf("Nombre: %s\n", this.doctor[i].getNombre());
+        }
+        
+        while(true){
+        System.out.println("Escribe el ID del doctor que desea seleccionar");
+        System.out.println("(tome en cuenta la especialidad a la hora de elegir)");
+        doctorId = tec.nextInt(); 
+        tec.nextLine();
+        Doctor doctor = this.obtenerDoctor(doctorId);
+        if(doctor != null){
+                break;
+            }
+        System.out.println("Seleccion incorrecta");
+        }
+        Vector<Paciente> pacientes = this.buscarPacientesW("", doctorId);
+        
+        if (pacientes == null || pacientes.size() == 0){
+            System.out.println("");
+            System.out.println("No se encontraron pacientes.");
+            System.out.println("");
+            return;
+        }
+        //aqui se imprime la informacion del paciente encontrado 
+        for(int i = 0; i < pacientes.size(); i++){
+            Paciente paciente = pacientes.get(i);
+            System.out.println("");
+            
+            System.out.printf("%1s", esi);
+            for(int b = 0 ;b < 54; b++){
+                System.out.printf("%1s",esh);
+            }
+            System.out.printf("%1s%n", esd);
+        
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Nombre:",paciente.getNombre(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Clave:",paciente.getClave(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Sexo:",paciente.getSexo(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Edificio:",paciente.getEdif(),esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",paciente.getHabit() + 1,esv);
+            
+            //aqui hay que agregar la habitacion actual, tampoco supe ponerla xd
+            //System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",esv);
+            
+            //aqui no supe agregar la fecha
+            /*
+            System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de nacimiento:",paciente.getFechaNacimiento(),esv);
+            System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de ingreso:", paciente.getFechaIngreso(),esv);
+            */            
+
+            System.out.printf("%1s", eii);
+            for(int b = 0 ;b < 54; b++){
+                System.out.printf("%1s",esh);
+            }
+            System.out.printf("%1s%n", eid);
+            
+            System.out.println("");
+        }
+   
+    }
     public void imprimirMapaA(){
         
         //Edificio A

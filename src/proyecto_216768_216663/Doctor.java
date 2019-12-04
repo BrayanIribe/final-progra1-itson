@@ -9,6 +9,11 @@ public class Doctor extends Paciente{
     super();
     }
     
+    Doctor(int id, String nombre, char sexo, char especialidad){
+        super(id, nombre, sexo);
+        this.especialidad = especialidad;
+    }
+    
     public char getEspecialidad() {
         return especialidad;
     }
