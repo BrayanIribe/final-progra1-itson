@@ -32,7 +32,7 @@ public class Paciente {
         
         this.fechaNacimiento.set(
                 Integer.parseInt(date[0]),
-                Integer.parseInt(date[1]),
+                Integer.parseInt(date[1]) - 1,
                 Integer.parseInt(date[2])
         );
         
@@ -40,7 +40,7 @@ public class Paciente {
         
         this.fechaIngreso.set(
                 Integer.parseInt(date[0]),
-                Integer.parseInt(date[1]),
+                Integer.parseInt(date[1]) - 1,
                 Integer.parseInt(date[2])
         );
         

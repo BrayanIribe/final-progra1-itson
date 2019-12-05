@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Principal<Proyecto_216768_216663_9a07c3ba>",
+            "request": "launch",
+            "mainClass": "proyecto_216768_216663.Principal",
+            "projectName": "Proyecto_216768_216663_9a07c3ba"
+        }
+    ]
+}
