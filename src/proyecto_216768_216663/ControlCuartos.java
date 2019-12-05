@@ -50,21 +50,21 @@ public class ControlCuartos {
         this.doctor[2] = new Doctor(3, "Laura Bozo", 'F', 'G');
 
         // constructores para el edificio A
-        this.A[1] = new Paciente(this.manager, "Jesus Urrego", 'H', "1990-10-12", "2019-10-08", 'A', 1, 1);
-        this.A[5] = new Paciente(this.manager, "Sara Perez", 'F', "1997-03-28", "2019-10-18", 'A', 5, 2);
-        this.A[9] = new Paciente(this.manager, "Diego Garcia", 'H', "2004-07-17", "2019-11-20", 'A', 9, 3);
+        this.A[1] = new Paciente(this.manager, "Jesus Urrego", 'H', "1990-10-12", "2019-10-08", 'A', 1, 2);
+        this.A[5] = new Paciente(this.manager, "Sara Perez", 'F', "1997-03-28", "2019-10-18", 'A', 5, 1);
+        this.A[9] = new Paciente(this.manager, "Diego Garcia", 'H', "2004-07-17", "2019-11-20", 'A', 9, 2);
         this.A[13] = new Paciente(this.manager, "Daniela Flores", 'F', "1999-10-27", "2019-11-28", 'A', 13, 1);
         // constructores para el edificio B
-        this.B[0] = new Paciente(this.manager, "Pedro Zapata", 'H', "57-05-03", "2019-08-19", 'B', 0, 1);
+        this.B[0] = new Paciente(this.manager, "Pedro Zapata", 'H', "57-05-03", "2019-08-19", 'B', 0, 2);
         this.B[1] = new Paciente(this.manager, "Camilo Zuñiga", 'H', "2001-02-23", "2019-10-20", 'B', 1, 2);
         this.B[2] = new Paciente(this.manager, "Laura Camello", 'F', "1932-01-25", "2019-11-28", 'B', 2, 3);
-        this.B[3] = new Paciente(this.manager, "Bruce Banner", 'H', "1969-12-18", "2019-11-10", 'B', 3, 1);
+        this.B[3] = new Paciente(this.manager, "Bruce Banner", 'H', "1969-12-18", "2019-11-10", 'B', 3, 2);
         this.B[4] = new Paciente(this.manager, "Peter Parker", 'H', "1962-08-10", "2019-10-19", 'B', 4, 2);
-        this.B[5] = new Paciente(this.manager, "Hermione Granger", 'F', "1979-09-19", "2019-11-25", 'B', 5, 2);
-        this.B[6] = new Paciente(this.manager, "Homero Simpson", 'H', "1956-05-12", "2019-10-09", 'B', 6, 3);
-        this.B[7] = new Paciente(this.manager, "El Rubius", 'H', "1990-02-13", "2019-11-24", 'B', 7, 3);
-        this.B[8] = new Paciente(this.manager, "Ariana Grande", 'F', "1993-06-26", "2019-10-31", 'B', 8, 1);
-        this.B[9] = new Paciente(this.manager, "La Rosalia", 'H', "1993-09-25", "2019-11-29", 'B', 9, 2);
+        this.B[5] = new Paciente(this.manager, "Hermione Granger", 'F', "1979-09-19", "2019-11-25", 'B', 5, 1);
+        this.B[6] = new Paciente(this.manager, "Homero Simpson", 'H', "1956-05-12", "2019-10-09", 'B', 6, 2);
+        this.B[7] = new Paciente(this.manager, "El Rubius", 'H', "1990-02-13", "2019-11-24", 'B', 7, 2);
+        this.B[8] = new Paciente(this.manager, "Ariana Grande", 'F', "1993-06-26", "2019-10-31", 'B', 8, 2);
+        this.B[9] = new Paciente(this.manager, "La Rosalia", 'H', "1993-09-25", "2019-11-29", 'B', 9, 3);
         int opcion = 0;
         
         while (true) {
@@ -100,6 +100,7 @@ public class ControlCuartos {
                 break;
             case 4:
                 // listado de pacientes de determinado doctor
+                listaDoctores();
                 pacientesDoctor();
                 break;
             case 5:
@@ -128,9 +129,13 @@ public class ControlCuartos {
     public void darSalida() {
         System.out.printf("Seleccione un edificio (A/B): ");
         String edifRaw = tec.nextLine().toUpperCase();
+        System.out.println("");
+        
+        
         char edif = (edifRaw != null && edifRaw.length() > 0 ? edifRaw.charAt(0) : 'A');
         Paciente[] edificio = (edif == 'A' ? this.A : this.B);
         Paciente paciente;
+        
         if (edif == 'A')
             imprimirMapaA();
         else
@@ -144,15 +149,36 @@ public class ControlCuartos {
             this.tec.nextLine();
             if (paciente != null)
                 break;
+            else
+                System.out.println("La habitacion esta vacia, por favor seleccione otra");
         }
 
-        // imprimir info
-        // la variable paciente es el objeto
+        System.out.println("");
 
-        // TODO
+            System.out.printf("%1s", esi);
+            for (int b = 0; b < 54; b++) {
+                System.out.printf("%1s", esh);
+            }
+            System.out.printf("%1s%n", esd);
+
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Nombre:", paciente.getNombre(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Clave:", paciente.getClave(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Sexo:", paciente.getSexo(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Edificio:", paciente.getEdif(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Habitacion:", paciente.getHabit() + 1, esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Fecha de nacimiento:", paciente.getFechaNacimiento().getTime(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Fecha de ingreso:", paciente.getFechaIngreso().getTime(), esv);
+            
+            System.out.printf("%1s", eii);
+            for (int b = 0; b < 54; b++) {
+                System.out.printf("%1s", esh);
+            }
+            System.out.printf("%1s%n", eid);
+
+            System.out.println("");
 
         while (true) {
-            System.out.printf("Desea darle salida al paciente? (s/n): ");
+            System.out.printf("¿Desea darle salida al paciente? (s/n): ");
             String optRaw = this.tec.nextLine().toUpperCase();
             if (optRaw != null && optRaw.length() > 0) {
                 char opt = optRaw.charAt(0);
@@ -172,18 +198,42 @@ public class ControlCuartos {
         System.out.printf("Dias: %d, Total: $%.2f\n", days, total);
         corte += total;
         edificio[ind - 1] = null;
+        
+        System.out.println("");
+        if (edif == 'A')
+            imprimirMapaA();
+        else
+            imprimirMapaB();
     }
 
     public void hacerCorte(){
-        System.out.printf("%.2f%n",this.corte);
+        
+        while (true) {
+            System.out.printf("¿Desea hacer el corte? (s/n): ");
+            String optRaw = this.tec.nextLine().toUpperCase();
+            if (optRaw != null && optRaw.length() > 0) {
+                char opt = optRaw.charAt(0);
+                if (opt == 'N')
+                    return;
+                else{
+                    if(this.corte <=0f){
+                        System.out.println("Hoy no hay ganacias");
+                    }
+                    else{
+                        System.out.printf("%22s%.2f%n","El corte del dia es: $",this.corte);
+                        this.corte = 0.0f;
+                    }
+                }
+                    break;
+            }
+            
+        }
     }
     public void buscarPacientes() {
         System.out.printf("Escribe el nombre o clave del paciente: ");
         String keyword = this.tec.nextLine();
         System.out.println("");
 
-        // aqui hay que hacer que al momento de buscar se ignoren mayusculas o
-        // minusculas
         Vector<Paciente> pacientes = this.buscarPacientesW(keyword, 0);
 
         if (pacientes == null || pacientes.size() == 0) {
@@ -196,7 +246,7 @@ public class ControlCuartos {
         for (int i = 0; i < pacientes.size(); i++) {
             Paciente paciente = pacientes.get(i);
             System.out.println("");
-
+            Doctor doctor;
             System.out.printf("%1s", esi);
             for (int b = 0; b < 54; b++) {
                 System.out.printf("%1s", esh);
@@ -208,18 +258,9 @@ public class ControlCuartos {
             System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Sexo:", paciente.getSexo(), esv);
             System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Edificio:", paciente.getEdif(), esv);
             System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Habitacion:", paciente.getHabit() + 1, esv);
-
-            // aqui hay que agregar la habitacion actual, tampoco supe ponerla xd
-            // System.out.printf("%-2s%-22s%-30s%2s%n",esv,"Habitacion:",esv);
-
-            // aqui no supe agregar la fecha
-            /*
-             * System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de nacimiento:",paciente.
-             * getFechaNacimiento(),esv);
-             * System.out.printf("%-2s%-20s%-18s%2s%n",esv,"Fecha de ingreso:",
-             * paciente.getFechaIngreso(),esv);
-             */
-
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Fecha de nacimiento:", paciente.getFechaNacimiento().getTime(), esv);
+            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Fecha de ingreso:", paciente.getFechaIngreso().getTime(), esv);
+            
             System.out.printf("%1s", eii);
             for (int b = 0; b < 54; b++) {
                 System.out.printf("%1s", esh);
@@ -462,12 +503,6 @@ public class ControlCuartos {
             }
         }
 
-        // cambie esto por las la lineas que escribi arriba porque no estaba validando
-        // el edificio B
-        /*
-         * if(edificio.length <= 0){ System.out.println("No hay capacidad."); return; }
-         */
-
         int yi, mi, di, yn, mn, dn;
 
         System.out.printf("Escribe el nombre: ");
@@ -483,6 +518,9 @@ public class ControlCuartos {
             if (this.doctor == null)
                 continue;
         }
+        
+        System.out.println("");
+        listaDoctores();
 
         while (true) {
             System.out.println("Escribe el ID del doctor que desea seleccionar");
@@ -490,6 +528,14 @@ public class ControlCuartos {
             doctorId = tec.nextInt();
             tec.nextLine();
             Doctor doctor = this.obtenerDoctor(doctorId);
+            char docesp;
+            docesp = doctor.getEspecialidad();
+            if (sexo != 'F'){
+                if(docesp == 'G'){
+                    System.out.println("El paciente es masculino, seleccion de doctor incorrecta");
+                    continue;
+                }
+            }
             if (doctor != null) {
                 break;
             }
@@ -570,22 +616,71 @@ public class ControlCuartos {
         }
         return null;
     }
-
-    public void pacientesDoctor() {
-        int doctorId = 1;
-
+    
+    public void listaDoctores() {
+        //linea superior
+        System.out.printf("%1s", esi);
+        for(int i = 0 ; i < 4 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s",us);
+        for(int i = 0 ; i < 16 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s",us);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",esd);
+        
+        System.out.printf("%-2s%-3s%-6s%-11s%-2s%-10s%2s%n",esv,"ID",esv,"Nombre",esv,"Especialidad",esv);
+        
+        //linea division
+        System.out.printf("%1s",uli);
+        for(int i = 0 ; i < 4 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s", udc);
+        for(int i = 0 ; i < 16 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s",udc);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",uld);
+        
         for (int i = 0; i < this.doctor.length; i++) {
             if (this.doctor == null)
                 continue;
 
             String esp = (doctor[i].getEspecialidad() == 'O' ? "Oncologia" : "Ginecologia");
-            System.out.printf("%1s%-2s%-15s%-2s%-15s\n", doctor[i].getId(), ":", this.doctor[i].getNombre(), "-", esp);
+            System.out.printf("%-2s%-3s%-2s%-15s%-2s%-13s%1s\n", esv, doctor[i].getId(), esv, this.doctor[i].getNombre(), esv, esp, esv);
         }
+        //linea inferior
+        System.out.printf("%1s", eii);
+        for(int i = 0 ; i < 4 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s",ui);
+        for(int i = 0 ; i < 16 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s",ui);
+        for(int i = 0 ; i < 14 ; i++){
+            System.out.printf("%1s",esh);
+        }
+        System.out.printf("%1s%n",eid);
+        System.out.println("");
+    }
+
+    public void pacientesDoctor() {
+        int doctorId = 1;
 
         while (true) {
             System.out.println("Escribe el ID del doctor que desea seleccionar");
             System.out.println("(tome en cuenta la especialidad a la hora de elegir)");
-            doctorId = tec.nextInt();
+            System.out.print("> ");doctorId = tec.nextInt();
             tec.nextLine();
             Doctor doctor = this.obtenerDoctor(doctorId);
             if (doctor != null) {
@@ -604,33 +699,69 @@ public class ControlCuartos {
         // aqui se imprime la informacion de los pacientes
 
         System.out.println("");
+        //linea superior
         System.out.printf("%1s", esi);
-        for (int b = 0; b < 54; b++) {
+        for (int b = 0; b < 45; b++) {
             System.out.printf("%1s", esh);
         }
         System.out.printf("%1s%n", esd);
 
-        System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Nombre:", doctor[doctorId - 1].getNombre(), esv);
+        System.out.printf("%-2s%-7s%2s%-34s%2s%n", esv, "Doctor:","", doctor[doctorId - 1].getNombre(), esv);
 
-        for (int b = 0; b < 54; b++) {
+        //division 01
+        System.out.printf("%1s", uli);
+        for (int b = 0; b < 21; b++) {
             System.out.printf("%1s", esh);
         }
-        System.out.printf("%1s%n", eid);
-
+        System.out.printf("%1s", us);
+        for (int b = 0; b < 10; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s", us);
+        for (int b = 0; b < 12; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s%n", uld);
+        
+        //etiquetas
+        System.out.printf("%-7s%-15s%-2s%-9s%-2s%-10s%2s%n", esv, "Paciente", esv,"Edificio", esv, "Habitacion",esv);
+        
+        //division 02
+        System.out.printf("%1s", uli);
+        for (int b = 0; b < 21; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s", udc);
+        for (int b = 0; b < 10; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s", udc);
+        for (int b = 0; b < 12; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s%n", uld);
+        
+        //informacion
         for (int i = 0; i < pacientes.size(); i++) {
             Paciente paciente = pacientes.get(i);
 
-            System.out.printf("%-2s%-22s%-30s%2s%n", esv, "Nombre:", paciente.getNombre(), esv);
+            System.out.printf("%-2s%-2s%-18s%-6s%-5s%1s%7s%6s%n", esv,"-", paciente.getNombre(), esv, paciente.getEdif(), esv,paciente.getHabit()+1,esv);
         }
 
+        //linea inferior
         System.out.printf("%1s", eii);
-        for (int b = 0; b < 54; b++) {
+        for (int b = 0; b < 21; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s", ui);
+        for (int b = 0; b < 10; b++) {
+            System.out.printf("%1s", esh);
+        }
+        System.out.printf("%1s", ui);
+        for (int b = 0; b < 12; b++) {
             System.out.printf("%1s", esh);
         }
         System.out.printf("%1s%n", eid);
-
-        System.out.println("");
-
     }
 
     public void imprimirMapaA() {
